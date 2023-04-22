@@ -1,0 +1,32 @@
+nation_mission_gui:
+  - name: 'Misje Nacji'
+  - deposit_button:
+      - name: 'hi'
+      - lore: "test"
+  - preview_button:
+      - name: 'hi'
+      - lore: 'test'
+  - stats_button:
+      - name: 'hi'
+      - lore: 'test'
+  - preview_button:
+      - name: 'hi'
+      - lore: 'test'
+  - preview_button:
+      - name: 'hi'
+      - lore: 'test'
+missions_types:
+  - dark_oak_planks
+  - oak_planks
+  - spruce_planks
+  - birch_planks
+  - jungle_planks
+  - acacia_planks
+  - cobblestone
+  - iron_ingot
+  - wheat
+  - potato
+  - carrot
+  - melon_slice
+  - coal
+  - netherrack
