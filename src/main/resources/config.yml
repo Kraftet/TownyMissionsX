@@ -1,18 +1,16 @@
 nation_mission_gui:
-  - name: 'Misje Nacji'
-  - deposit_button:
+  name: 'Misje Nacji'
+  items:
+    - deposit_button:
+      - slot: 11
       - name: 'hi'
       - lore: "test"
-  - preview_button:
+    - preview_button:
+      - slot: 13
       - name: 'hi'
       - lore: 'test'
-  - stats_button:
-      - name: 'hi'
-      - lore: 'test'
-  - preview_button:
-      - name: 'hi'
-      - lore: 'test'
-  - preview_button:
+    - stats_button:
+      - slot: 15
       - name: 'hi'
       - lore: 'test'
 missions_types:

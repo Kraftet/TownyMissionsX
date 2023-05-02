@@ -2,9 +2,6 @@ package pl.kraftet.townymissions.stats;
 
 import org.bukkit.configuration.Configuration;
 import pl.kraftet.townymissions.TownyMissions;
-import pl.kraftet.townymissions.database.models.TownyMissionsDB;
-
-import java.sql.SQLException;
 
 public class BestNations {
     private static TownyMissions plugin;

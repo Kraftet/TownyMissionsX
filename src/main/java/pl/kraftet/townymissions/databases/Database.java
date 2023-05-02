@@ -1,9 +1,9 @@
-package pl.kraftet.townymissions.database;
+package pl.kraftet.townymissions.databases;
 
 import org.bukkit.entity.Player;
-import pl.kraftet.townymissions.TownMission;
-import pl.kraftet.townymissions.TownyMissions;
-import pl.kraftet.townymissions.database.models.TownyMissionsDB;
+import pl.kraftet.townymissions.missions.TownMission;
+import pl.kraftet.townymissions.databases.models.NationsMissionsModel;
+import pl.kraftet.townymissions.guis.NationMissionGUI;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,13 +31,14 @@ public class Database {
 
     public void initializeDatabase() throws SQLException {
         Statement statement = getConnection().createStatement();
-        String sql = "CREATE TABLE IF NOT EXISTS towny_missions(nation String primary key, current_amount long, required_amount long, mission_type String, uuid varchar(36), stored long, completed int)";
-        statement.execute(sql);
+//        String sql = "CREATE TABLE IF NOT EXISTS towny_missions(nation String primary key, current_amount long, required_amount long, mission_type String, uuid varchar(36), stored long, completed int)";
+        String sql = "CREATE TABLE IF NOT EXISTS towny_missions (nation VARCHAR(255) PRIMARY KEY, current_amount BIGINT, required_amount BIGINT, mission_type VARCHAR(255), uuid VARCHAR(36), stored BIGINT, completed INT)";
 
+        statement.execute(sql);
         statement.close();
     }
 
-    public TownyMissionsDB findNationMissionByPlayer(String uuid) throws SQLException {
+    public NationsMissionsModel findNationMissionByPlayer(String uuid) throws SQLException {
         Statement statement = getConnection().createStatement();
         String sql = "SELECT * FROM towny_missions WHERE uuid = " + uuid;
         ResultSet results = statement.executeQuery(sql);
@@ -50,11 +51,11 @@ public class Database {
             long stored = results.getLong("stored");
             int completed = results.getInt("completed");
 
-            TownyMissionsDB townyMissionsDb = new TownyMissionsDB(nation, current_ammount, required_ammount, mission_type, uuid, stored, completed);
+            NationsMissionsModel nationsMissionsDb = new NationsMissionsModel(nation, current_ammount, required_ammount, mission_type, uuid, stored, completed);
 
             statement.close();
 
-            return townyMissionsDb;
+            return nationsMissionsDb;
         }
 
         statement.close();
@@ -62,7 +63,7 @@ public class Database {
         return null;
     }
 
-    public TownyMissionsDB updateAmount(int amount, String nation, Player player) throws SQLException {
+    public NationsMissionsModel updateAmount(int amount, String nation, Player player) throws SQLException {
         Statement statement = getConnection().createStatement();
         String sql = "UPDATE towny_missions SET current_amount = " + amount + " WHERE nation = " + nation;
         ResultSet results = statement.executeQuery(sql);
@@ -73,7 +74,7 @@ public class Database {
         return null;
     }
 
-    private TownyMissionsDB checkAmount(int amount, String nation, Player player) throws SQLException {
+    private NationsMissionsModel checkAmount(int amount, String nation, Player player) throws SQLException {
         PreparedStatement statement = getConnection().prepareStatement("SELECT * FROM towny_missions WHERE nation = ? AND current_amount >= required_amount");
         statement.setString(1, nation);
         ResultSet result = statement.executeQuery();
@@ -109,7 +110,7 @@ public class Database {
         return missionType;
     }
 
-    public TownyMissionsDB updatePlayerStats(int amount, UUID uuid) throws SQLException {
+    public NationsMissionsModel updatePlayerStats(int amount, UUID uuid) throws SQLException {
         Statement statement = getConnection().createStatement();
         String sql = "UPDATE towny_missions SET stored = " + amount + " WHERE uuid = " + uuid;
         ResultSet results = statement.executeQuery(sql);
@@ -160,7 +161,7 @@ public class Database {
         return requiredAmount;
     }
 
-    public TownyMissionsDB getNationStats() throws SQLException {
+    public NationsMissionsModel getNationStats() throws SQLException {
         Statement statement = getConnection().createStatement();
         String sql = "SELECT * FROM towny_missions";
         ResultSet results = statement.executeQuery(sql);
@@ -174,11 +175,11 @@ public class Database {
             long stored = results.getLong("stored");
             int completed = results.getInt("completed");
 
-            TownyMissionsDB townyMissionsDb = new TownyMissionsDB(nation, current_ammount, required_ammount, mission_type, uuid, stored, completed);
+            NationsMissionsModel nationsMissionsDb = new NationsMissionsModel(nation, current_ammount, required_ammount, mission_type, uuid, stored, completed);
 
             statement.close();
 
-            return townyMissionsDb;
+            return nationsMissionsDb;
         }
 
         statement.close();
@@ -186,7 +187,7 @@ public class Database {
         return null;
     }
 
-    public TownyMissionsDB getNationsByTheMostCompleted() throws SQLException {
+    public NationsMissionsModel getNationsByTheMostCompleted() throws SQLException {
         Statement statement = connection.createStatement();
         ResultSet result = statement.executeQuery(
                 "SELECT nation, COUNT(*) AS completed_count " +
@@ -198,10 +199,13 @@ public class Database {
         );
 
         while (result.next()) {
+            int position = 1;
             String nation = result.getString("nation");
             int completedCount = result.getInt("completed_count");
 
-            // Do something with nation and completedCount values
+            NationMissionGUI.missionsTopTowns(nation, completedCount, position);
+
+            position++;
         }
 
         statement.close();

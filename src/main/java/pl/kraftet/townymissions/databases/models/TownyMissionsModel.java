@@ -1,8 +1,8 @@
-package pl.kraftet.townymissions.database.models;
+package pl.kraftet.townymissions.databases.models;
 
-public class TownyMissionsDB {
+public class TownyMissionsModel {
 
-    private String nation;
+    private String town;
     private long current_ammount;
     private long required_ammount;
     private String mission_type;
@@ -11,8 +11,8 @@ public class TownyMissionsDB {
 
     private int completed;
 
-    public TownyMissionsDB(String nation, long current_ammount, long required_ammount, String mission_type, String uuid, long stored, int completed) {
-        this.nation = nation;
+    public TownyMissionsModel(String town, long current_ammount, long required_ammount, String mission_type, String uuid, long stored, int completed) {
+        this.town = town;
         this.current_ammount = current_ammount;
         this.required_ammount = required_ammount;
         this.mission_type = mission_type;
@@ -21,12 +21,12 @@ public class TownyMissionsDB {
         this.completed = completed;
     }
 
-    public String getNation() {
-        return nation;
+    public String getTown() {
+        return town;
     }
 
-    public void setNation(String nation) {
-        this.nation = nation;
+    public void setTown(String town) {
+        this.town = town;
     }
 
     public long getCurrent_ammount() {

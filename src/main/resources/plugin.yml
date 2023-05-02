@@ -4,3 +4,5 @@ main: pl.kraftet.townymissions.TownyMissions
 api-version: 1.18
 depend: [Towny]
 authors: [Kraftet]
+commands:
+  missionnation:

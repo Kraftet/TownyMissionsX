@@ -1,11 +1,15 @@
 package pl.kraftet.townymissions;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import pl.kraftet.townymissions.database.Database;
+import pl.kraftet.townymissions.databases.Database;
+import pl.kraftet.townymissions.guis.NationMissionGUI;
 import pl.kraftet.townymissions.handlers.CommandsHandler;
+import pl.kraftet.townymissions.handlers.EconomyHandler;
 import pl.kraftet.townymissions.handlers.EventsHandler;
+import pl.kraftet.townymissions.handlers.FilesHandler;
 
 import java.sql.SQLException;
+import java.util.logging.FileHandler;
 
 public final class TownyMissions extends JavaPlugin {
 
@@ -16,9 +20,15 @@ public final class TownyMissions extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+
         System.out.println("Hello");
         new EventsHandler(this);
         new CommandsHandler(this);
+        new EconomyHandler();
+        new FilesHandler();
+        new NationMissionGUI(this);
 
 
         // <❗Database>

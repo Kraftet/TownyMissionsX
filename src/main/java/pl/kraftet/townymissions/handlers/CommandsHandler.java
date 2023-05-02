@@ -1,6 +1,7 @@
 package pl.kraftet.townymissions.handlers;
 
 import pl.kraftet.townymissions.TownyMissions;
+import pl.kraftet.townymissions.commands.MissionCommand;
 import pl.kraftet.townymissions.commands.MissionNation;
 
 public class CommandsHandler {
@@ -8,9 +9,11 @@ public class CommandsHandler {
 
     public CommandsHandler(TownyMissions townyMissions) {
         plugin = townyMissions;
+        handler();
     }
 
-    public void commandsHandler() {
-        plugin.getCommand("missionnation").setExecutor(new MissionNation(plugin));
+    public void handler() {
+        plugin.getCommand("mission").setExecutor(new MissionCommand(plugin));
+        plugin.getCommand("tiers").setExecutor(new MissionCommand(plugin));
     }
 }

@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -13,14 +14,15 @@ import pl.kraftet.townymissions.TownyMissions;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-public class NationMissionGUI {
+public class TownMissionGUI {
 
     public static TownyMissions plugin;
     public static Configuration config;
 
-    public NationMissionGUI(TownyMissions plugin) {
-        NationMissionGUI.plugin = plugin;
+    public TownMissionGUI(TownyMissions plugin) {
+        TownMissionGUI.plugin = plugin;
         config = plugin.getConfig();
         System.out.print(config);
     }
@@ -46,7 +48,10 @@ public class NationMissionGUI {
         }
 
         Inventory inventory = Bukkit.createInventory(p, 45, inventoryName);
-        plugin.getDatabase().getNationsByTheMostCompleted();
+
+        loadItems(inventory);
+
+
         inventory.setItem(11, missionDepositItem());
         inventory.setItem(13, missionPreviewItem());
         inventory.setItem(15, missionStatsItem());
@@ -57,6 +62,27 @@ public class NationMissionGUI {
 //        inventory.setItem(46, item5);
 
         p.openInventory(inventory);
+    }
+
+    private static void loadItems(Inventory inventory) {
+        ConfigurationSection items = config.getConfigurationSection("items");
+        if (items != null) {
+            Set<String> keys = items.getKeys(false);
+            for (String key : keys) {
+                ConfigurationSection item = items.getConfigurationSection(key);
+                assert item != null;
+                ConfigurationSection slotSection = item.getConfigurationSection("slot");
+                assert slotSection != null;
+                int slot = slotSection.getInt("value");
+                String material = item.getConfigurationSection("material").toString();
+                String name = item.getConfigurationSection("name").toString();
+                String lore = item.getConfigurationSection("lore").toString();
+
+                ItemStack itemEQ = new ItemStack(Material.getMaterial(material));
+                inventory.setItem(slot, missionDepositItem());
+
+            }
+        }
     }
 
     private static ItemStack missionDepositItem() {
