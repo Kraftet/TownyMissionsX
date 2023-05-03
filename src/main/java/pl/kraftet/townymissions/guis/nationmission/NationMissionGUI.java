@@ -1,4 +1,4 @@
-package pl.kraftet.townymissions.guis;
+package pl.kraftet.townymissions.guis.nationmission;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -25,17 +25,14 @@ public class NationMissionGUI {
         System.out.print(config);
     }
 
+    private static ItemStack missionDepositItem;
+    private static ItemStack missionPreviewItem;
+    private static ItemStack missionStatsItem;
     private static ItemStack item1;
     private static ItemStack item2;
     private static ItemStack item3;
     private static ItemStack item4;
     private static ItemStack item5;
-
-
-//    static void isNull() {
-//        if (config == null)
-//            return;
-//    }
 
 
     public static void open(Player p) throws SQLException {
@@ -47,9 +44,9 @@ public class NationMissionGUI {
 
         Inventory inventory = Bukkit.createInventory(p, 45, inventoryName);
         plugin.getDatabase().getNationsByTheMostCompleted();
-        inventory.setItem(11, missionDepositItem());
-        inventory.setItem(13, missionPreviewItem());
-        inventory.setItem(15, missionStatsItem());
+        inventory.setItem(11, missionDepositItem);
+        inventory.setItem(13, missionPreviewItem);
+        inventory.setItem(15, missionStatsItem);
 //        inventory.setItem(44, item1);
 //        inventory.setItem(43, item2);
 //        inventory.setItem(45, item3);

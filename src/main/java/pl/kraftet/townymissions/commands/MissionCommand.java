@@ -6,7 +6,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.kraftet.townymissions.TownyMissions;
-import pl.kraftet.townymissions.guis.NationMissionGUI;
+import pl.kraftet.townymissions.guis.nationmission.NationMissionGUI;
+import pl.kraftet.townymissions.guis.townmissiongui.TownMissionGUI;
 
 import java.sql.SQLException;
 
@@ -29,8 +30,8 @@ public class MissionCommand implements CommandExecutor {
         try {
             switch (arg1) {
                 case "nation" -> NationMissionGUI.open(p);
-                case "town" -> NationMissionGUI.open(p);
-                case "global" -> NationMissionGUI.open(p);
+                case "town" -> TownMissionGUI.open(p);
+//                case "global" -> GlobalMissionGUI.open(p);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

@@ -15,32 +15,33 @@ import pl.kraftet.townymissions.databases.models.NationsMissionsModel;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class NationMissionGUIEvents implements Listener  {
+public class TownMissionGUIEvents implements Listener {
 
     private final TownyMissions plugin;
-    public NationMissionGUIEvents(TownyMissions plugin) {
+
+    public TownMissionGUIEvents(TownyMissions plugin) {
         this.plugin = plugin;
     }
 
     public void itemClicked(InventoryClickEvent e) throws SQLException, TownyException {
         Player p = (Player) e.getWhoClicked();
         Inventory inventory = e.getClickedInventory();
-        String invName = plugin.getConfig().getString("nation_mission_gui.name");
+        String invName = plugin.getConfig().getString("town_mission_gui.name");
         if (!(e.getView().getTitle().equals(invName))) return;
         if (e.getView().getBottomInventory() == inventory) return;
 
         UUID uuid = p.getUniqueId();
-        NationsMissionsModel nationsMissionsDB = this.plugin.getDatabase().findNationMissionByPlayer(uuid.toString());
+        TownsMissionsModel townsMissionsDB = this.plugin.getDatabase().findTownMissionByPlayer(uuid.toString());
 
 
         if (e.getCurrentItem().getItemMeta().getCustomModelData() == 4000) { // mission deposit item
-            Material mission_type = Material.getMaterial(nationsMissionsDB.getMission_type().toUpperCase());
-            for(ItemStack item : p.getInventory().getContents()) {
-                if(item != null && item.getType() == mission_type) {
+            Material mission_type = Material.getMaterial(townsMissionsDB.getMission_type().toUpperCase());
+            for (ItemStack item : p.getInventory().getContents()) {
+                if (item != null && item.getType() == mission_type) {
                     int amount = item.getAmount();
                     p.getInventory().remove(item);
                     Resident resident = TownyAPI.getInstance().getResident(p);
-                    if (!(resident.hasNation())) return;
+                    if (!(resident.hasTown())) return;
                     String nation = resident.getNation().toString();
 
                     this.plugin.getDatabase().updateAmount(amount, nation, p);

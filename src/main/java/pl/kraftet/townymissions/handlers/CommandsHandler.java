@@ -2,7 +2,6 @@ package pl.kraftet.townymissions.handlers;
 
 import pl.kraftet.townymissions.TownyMissions;
 import pl.kraftet.townymissions.commands.MissionCommand;
-import pl.kraftet.townymissions.commands.MissionNation;
 
 public class CommandsHandler {
     TownyMissions plugin;

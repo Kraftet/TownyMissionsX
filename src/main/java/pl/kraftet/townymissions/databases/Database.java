@@ -1,9 +1,10 @@
 package pl.kraftet.townymissions.databases;
 
 import org.bukkit.entity.Player;
+import pl.kraftet.townymissions.guis.townmissiongui.TownMissionGUI;
 import pl.kraftet.townymissions.missions.TownMission;
 import pl.kraftet.townymissions.databases.models.NationsMissionsModel;
-import pl.kraftet.townymissions.guis.NationMissionGUI;
+import pl.kraftet.townymissions.guis.nationmission.NationMissionGUI;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -211,4 +212,51 @@ public class Database {
         statement.close();
         return null;
     }
+
+    public NationsMissionsModel getTownsByTheMostCompleted() throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery(
+                "SELECT nation, COUNT(*) AS completed_count " +
+                        "FROM towny_missions " +
+                        "WHERE completed = 1 " +
+                        "GROUP BY town " +
+                        "ORDER BY completed_count DESC " +
+                        "LIMIT 5"
+        );
+
+        while (result.next()) {
+            int position = 1;
+            String town = result.getString("town");
+            int completedCount = result.getInt("completed_count");
+
+            TownMissionGUI.missionsTopTowns(town, completedCount, position);
+
+            position++;
+        }
+
+        statement.close();
+        return null;
+    }
+
+//    public NationsMissionsModel getFirstNationByTheMostCompleted() throws SQLException {
+//        Statement statement = connection.createStatement();
+//        ResultSet result = statement.executeQuery(
+//                "SELECT nation, COUNT(*) AS completed_count " +
+//                        "FROM towny_missions " +
+//                        "WHERE completed = 1 " +
+//                        "GROUP BY nation " +
+//                        "ORDER BY completed_count DESC " +
+//                        "LIMIT 1"
+//        );
+//
+//        while (result.next()) {
+//            String nation = result.getString("nation");
+//            int completedCount = result.getInt("completed_count");
+//            NationMissionGUI.
+//            return String firstNationByMostCompleted = nation + completedCount;
+//        }
+//
+//        statement.close();
+//        return null;
+//    }
 }

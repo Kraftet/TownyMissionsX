@@ -2,17 +2,54 @@ nation_mission_gui:
   name: 'Misje Nacji'
   items:
     - deposit_button:
-      - slot: 11
-      - name: 'hi'
-      - lore: "test"
+        - slot: 11
+        - name: 'hi'
+        - lore: "test"
     - preview_button:
-      - slot: 13
-      - name: 'hi'
-      - lore: 'test'
+        - slot: 13
+        - name: 'hi'
+        - lore: 'test'
     - stats_button:
-      - slot: 15
-      - name: 'hi'
-      - lore: 'test'
+        - slot: 15
+        - name: 'hi'
+        - lore: 'test'
+  best_towns_items:
+    - first_best_town:
+        - slot: 43
+    - second_best_town:
+        - slot: 44
+    - third_best_town:
+        - slot: 45
+    - fourth_best_town:
+        - slot: 42
+    - fifth_best_town:
+        - slot: 46
+town_mission_gui:
+  name: 'Misje Nacji'
+  items:
+    - deposit_button:
+        - slot: 11
+        - name: 'hi'
+        - lore: "test"
+    - preview_button:
+        - slot: 13
+        - name: 'hi'
+        - lore: 'test'
+    - stats_button:
+        - slot: 15
+        - name: 'hi'
+        - lore: 'test'
+  best_towns_items:
+    - first_best_town:
+        - slot: 43
+    - second_best_town:
+        - slot: 44
+    - third_best_town:
+        - slot: 45
+    - fourth_best_town:
+        - slot: 42
+    - fifth_best_town:
+        - slot: 46
 missions_types:
   - dark_oak_planks
   - oak_planks
